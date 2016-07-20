@@ -34,8 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Subscription.findAll", query = "SELECT s FROM Subscription s"),
     @NamedQuery(name = "Subscription.findById", query = "SELECT s FROM Subscription s WHERE s.id = :id"),
-    @NamedQuery(name = "Subscription.findByEmailSubscriber", query = "SELECT s FROM Subscription s WHERE s.emailSubscriber = :emailSubscriber"),
-    @NamedQuery(name = "Subscription.findByRegisteredDate", query = "SELECT s FROM Subscription s WHERE s.registeredDate = :registeredDate"),
+    @NamedQuery(name = "Subscription.findByEmail", query = "SELECT s FROM Subscription s WHERE s.email = :email"),
+    @NamedQuery(name = "Subscription.findByRegistereddate", query = "SELECT s FROM Subscription s WHERE s.registereddate = :registereddate"),
     @NamedQuery(name = "Subscription.findByActivo", query = "SELECT s FROM Subscription s WHERE s.activo = :activo")})
 public class Subscription implements Serializable {
 
@@ -45,16 +45,17 @@ public class Subscription implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "emailSubscriber")
-    private String emailSubscriber;
+    @Column(name = "email")
+    private String email;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "registeredDate")
+    @Column(name = "registereddate")
     @Temporal(TemporalType.DATE)
-    private Date registeredDate;
+    private Date registereddate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "activo")
@@ -70,10 +71,10 @@ public class Subscription implements Serializable {
         this.id = id;
     }
 
-    public Subscription(Integer id, String emailSubscriber, Date registeredDate, boolean activo) {
+    public Subscription(Integer id, String email, Date registereddate, boolean activo) {
         this.id = id;
-        this.emailSubscriber = emailSubscriber;
-        this.registeredDate = registeredDate;
+        this.email = email;
+        this.registereddate = registereddate;
         this.activo = activo;
     }
 
@@ -85,20 +86,20 @@ public class Subscription implements Serializable {
         this.id = id;
     }
 
-    public String getEmailSubscriber() {
-        return emailSubscriber;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailSubscriber(String emailSubscriber) {
-        this.emailSubscriber = emailSubscriber;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Date getRegisteredDate() {
-        return registeredDate;
+    public Date getRegistereddate() {
+        return registereddate;
     }
 
-    public void setRegisteredDate(Date registeredDate) {
-        this.registeredDate = registeredDate;
+    public void setRegistereddate(Date registereddate) {
+        this.registereddate = registereddate;
     }
 
     public boolean getActivo() {

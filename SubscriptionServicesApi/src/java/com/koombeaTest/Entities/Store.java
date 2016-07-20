@@ -37,6 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Store.findByActivo", query = "SELECT s FROM Store s WHERE s.activo = :activo")})
 public class Store implements Serializable {
 
+    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -140,5 +142,6 @@ public class Store implements Serializable {
     public String toString() {
         return "com.koombeaTest.Entities.Store[ id=" + id + " ]";
     }
+
     
 }

@@ -80,7 +80,14 @@ public class StoreFacade extends AbstractFacade<Store> {
         List<Store> lst = (List<Store>) q.getResultList();
         return lst;
     }
-
+    
+    public List<Store> listStoreSecond(String name) {
+        String temp=name!=null?name:"";
+        Query q = getEntityManager().createQuery("SELECT s FROm Store s WHERE UPPER(s.nombre) like UPPER(:nombre) and s.activo=TRUE");
+        q.setParameter("nombre", "%" + temp + "%");
+        List<Store> lst = (List<Store>) q.getResultList();
+        return lst;
+    }
     public Long countStore(String name) {
         Long total;
         try {

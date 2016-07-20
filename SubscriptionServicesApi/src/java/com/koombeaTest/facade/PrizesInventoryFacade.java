@@ -20,19 +20,19 @@ import javax.persistence.Query;
  */
 @Stateless
 public class PrizesInventoryFacade extends AbstractFacade<SubsPrizesinventory> {
-    
+
     @PersistenceContext(unitName = "SubscriptionServicesApiPU")
     private EntityManager em;
-    
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
     public PrizesInventoryFacade() {
         super(SubsPrizesinventory.class);
     }
-    
+
     public String createPrizeInventory(Store storeID, Prizes prizeID, Integer stock) {
         String result = "";
         try {
@@ -49,7 +49,7 @@ public class PrizesInventoryFacade extends AbstractFacade<SubsPrizesinventory> {
         }
         return result;
     }
-    
+
     public String editPrizeInventory(SubsPrizesinventory current, Store storeID, Prizes prizeID, Integer stock) {
         String result = "";
         try {
@@ -65,7 +65,7 @@ public class PrizesInventoryFacade extends AbstractFacade<SubsPrizesinventory> {
         }
         return result;
     }
-    
+
     public String deletePrizeInventory(SubsPrizesinventory current) {
         String result = "";
         try {
@@ -78,7 +78,7 @@ public class PrizesInventoryFacade extends AbstractFacade<SubsPrizesinventory> {
         }
         return result;
     }
-    
+
     public List<SubsPrizesinventory> listPrizesInventory(String storeKey, String prizeKey, int start, int limit) {
         Query q = getEntityManager().createQuery("SELECT pi FROM SubsPrizesinventory pi WHERE UPPER(pi.idStore.nombre) LIKE UPPER(:storeKey) and UPPER(pi.idPrize.name) like UPPER(:prizeKey) and pi.activo=TRUE")
                 .setFirstResult(start)
@@ -88,7 +88,7 @@ public class PrizesInventoryFacade extends AbstractFacade<SubsPrizesinventory> {
         List<SubsPrizesinventory> list = q.getResultList();
         return list;
     }
-    
+
     public Long countPrizesInventory(String storeKey, String prizeKey) {
         Long total;
         try {
@@ -102,7 +102,7 @@ public class PrizesInventoryFacade extends AbstractFacade<SubsPrizesinventory> {
         }
         return total;
     }
-    
+
     public boolean validatePrizeInventory(Store storeID, Prizes prizesID) {
         Query q = getEntityManager().createQuery("SELECT pi FROM SubsPrizesinventory pi WHERE pi.idPrize.id=:idPrize and pi.idStore.id=:idStore and pi.activo=TRUE");
         q.setParameter("idPrize", prizesID.getId());
@@ -136,5 +136,13 @@ public class PrizesInventoryFacade extends AbstractFacade<SubsPrizesinventory> {
         }
         return list.get(0);
     }
-    
+
+    public List<SubsPrizesinventory> findPrizeInventoryByStore(int id, int start, int limit) {
+        Query q = getEntityManager().createQuery("SELECT pi FROM SubsPrizesinventory pi WHERE pi.idStore.id=:piID and pi.activo=TRUE").setFirstResult(start)
+                .setMaxResults(limit);;
+        q.setParameter("piID", id);
+        List<SubsPrizesinventory> list = q.getResultList();
+
+        return list;
+    }
 }

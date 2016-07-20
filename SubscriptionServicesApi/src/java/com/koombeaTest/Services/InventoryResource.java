@@ -13,6 +13,8 @@ import com.koombeaTest.GenericObjects.SessionManager;
 import com.koombeaTest.facade.PrizesFacade;
 import com.koombeaTest.facade.PrizesInventoryFacade;
 import com.koombeaTest.facade.StoreFacade;
+import com.koombeaTest.models.StorePrizesModel;
+import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -121,8 +123,7 @@ public class InventoryResource {
             if (prizes == null) {
                 return new GenericJSONResponse(false, GenericJSONResponse.NOT_FOUND_RESOURCE_STATUS, "Prizes no found by this ID: " + prizesID).toString();
             }
-            
-            
+
             response = prizesInventoryFacade.editPrizeInventory(prizesInventory, store, prizes, stock);
             if (response.equalsIgnoreCase("SUCCESS")) {
                 response = new GenericJSONResponse(true, GenericJSONResponse.SUCCESFUL_PROCESSED_STATUS, "Store edited successful").toString();
@@ -154,7 +155,7 @@ public class InventoryResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("delete")
-    public String list(@Context HttpServletRequest httpServletRequest, @FormParam("inventoryID") Integer inventoryID) {
+    public String delete(@Context HttpServletRequest httpServletRequest, @FormParam("inventoryID") Integer inventoryID) {
         String response = "";
         SessionManager sessionManager = new SessionManager(httpServletRequest);
         if (sessionManager.validateSession()) {
@@ -178,5 +179,27 @@ public class InventoryResource {
             response = new GenericJSONResponse(false, GenericJSONResponse.INVALID_SESSION_STATUS, "No exist Session").toString();
         }
         return response;
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("listStorePrize")
+    public String listStorePrize(@Context HttpServletRequest httpServletRequest, @FormParam("nombre") String name, @FormParam("start") int start, @FormParam("limit") int limit) {
+        List<Store> list = storeFacade.listStoreSecond(name != null ? name : "");
+        List<String> prizes = new LinkedList<String>();
+        List<StorePrizesModel> modelList = new LinkedList<StorePrizesModel>();
+
+        for (Store store : list) {
+            List<SubsPrizesinventory> subLst = prizesInventoryFacade.findPrizeInventoryByStore(store.getId(), start, limit);
+            for (SubsPrizesinventory subsPrizesinventory : subLst) {
+                prizes.add(subsPrizesinventory.getIdPrize().getName());
+            }
+            StorePrizesModel subscriberModel = new StorePrizesModel();
+            subscriberModel.setStoreID(store.getId());
+            subscriberModel.setStoreName(store.getNombre());
+            subscriberModel.setPrizes(!subLst.isEmpty() ? String.join(",", prizes) : "No prizes here");
+            modelList.add(subscriberModel);
+        }
+        return new GenericJSONResponse(true, GenericJSONResponse.SUCCESFUL_PROCESSED_STATUS, "list store prizes", modelList, modelList.size()).toString();
     }
 }

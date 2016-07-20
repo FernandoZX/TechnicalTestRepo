@@ -43,12 +43,13 @@ public class SubscriptionFacade extends AbstractFacade<Subscription> {
         String result = "";
         try {
             Subscription subscription = new Subscription();
-            subscription.setEmailSubscriber(email);
+            subscription.setEmail(email);
             subscription.setIdStore(store);
-            subscription.setRegisteredDate(now);
+            subscription.setRegistereddate(now);
             subscription.setActivo(true);
             getEntityManager().persist(subscription);
             String  emailResult=sendEmail(email, store);
+            result=emailResult;
         } catch (Exception ex) {
             ex.printStackTrace();
             result = "Can't create a subscription";
@@ -63,10 +64,10 @@ public class SubscriptionFacade extends AbstractFacade<Subscription> {
             
             HtmlEmail email = new HtmlEmail();
             email.setHostName("smtp.gmail.com");
-            email.setSmtpPort(465);
-            email.setAuthenticator(new DefaultAuthenticator("ingfernandoc@gmail.com", "d4n13ll4"));
-            email.setSSLOnConnect(true);
-            email.setFrom("Senders' email");
+            email.setSmtpPort(587);
+            email.setAuthenticator(new DefaultAuthenticator("", ""));
+            email.setStartTLSRequired(true);
+            email.setFrom("","Subscriber sw");
             email.setSubject("Congrats! - You subscribe " + store.getNombre());
             email.setHtmlMsg("<html>\n"
                     + "<body>\n"
@@ -111,7 +112,7 @@ public class SubscriptionFacade extends AbstractFacade<Subscription> {
     }
 
     public boolean validateDateSubs(String email, Store store, Date now) {
-        Query q = getEntityManager().createQuery("SELECT subs FROM Subscription subs WHERE subs.emailSubscriber=:email and subs.registeredDate=:date and subs.idStore.id=:idStore and subs.activo=TRUE");
+        Query q = getEntityManager().createQuery("SELECT subs FROM Subscription subs WHERE UPPER(subs.email)=UPPER(:email) and subs.registereddate=:date and subs.idStore.id=:idStore and subs.activo=TRUE");
         q.setParameter("email", email);
         q.setParameter("date", now);
         q.setParameter("idStore", store.getId());

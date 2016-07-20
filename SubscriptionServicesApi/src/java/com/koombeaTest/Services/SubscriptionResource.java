@@ -61,9 +61,14 @@ public class SubscriptionResource {
         if (store == null) {
             return new GenericJSONResponse(false, GenericJSONResponse.CONFLICT_STATUS, "Store no found by this ID: " + storeID).toString();
         }
-        response = subscriptionFacade.createSubscription(email, store, new java.util.Date());
+        java.util.Date date = new java.util.Date();
+        boolean validateSubscription = subscriptionFacade.validateDateSubs(email, store, date);
+        if (validateSubscription) {
+            return new GenericJSONResponse(false, GenericJSONResponse.CONFLICT_STATUS, "Cant subscribe twice on this day").toString();
+        }
+        response = subscriptionFacade.createSubscription(email, store, date);
         if (response.equalsIgnoreCase("SUCCESS")) {
-            response = new GenericJSONResponse(true, GenericJSONResponse.SUCCESFUL_PROCESSED_STATUS, "Store created successful").toString();
+            response = new GenericJSONResponse(true, GenericJSONResponse.SUCCESFUL_PROCESSED_STATUS, "Subscription successful").toString();
         } else {
             response = new GenericJSONResponse(false, GenericJSONResponse.INTERNAL_ERROR_STATUS, response).toString();
         }
