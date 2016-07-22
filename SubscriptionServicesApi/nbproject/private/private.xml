@@ -4,10 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/fernando/NetBeansProjects/SubscriptionServicesApi/src/java/com/koombeaTest/facade/SubscriptionFacade.java</file>
-            <file>file:/home/fernando/NetBeansProjects/SubscriptionServicesApi/src/java/com/koombeaTest/Services/PrizesResource.java</file>
-            <file>file:/home/fernando/NetBeansProjects/SubscriptionServicesApi/src/java/com/koombeaTest/facade/StoreFacade.java</file>
-            <file>file:/home/fernando/NetBeansProjects/SubscriptionServicesApi/src/java/com/koombeaTest/Services/InventoryResource.java</file>
-            <file>file:/home/fernando/NetBeansProjects/SubscriptionServicesApi/src/java/com/koombeaTest/facade/PrizesInventoryFacade.java</file>
+            <file>file:/home/fernando/NetBeansProjects/SubscriptionServicesApi/src/java/com/koombeaTest/Services/UserResource.java</file>
+            <file>file:/home/fernando/NetBeansProjects/SubscriptionServicesApi/src/java/com/koombeaTest/Entities/Subscription.java</file>
+            <file>file:/home/fernando/NetBeansProjects/SubscriptionServicesApi/src/java/com/koombeaTest/models/SubscriberModel.java</file>
+            <file>file:/home/fernando/NetBeansProjects/SubscriptionServicesApi/src/java/com/koombeaTest/Services/SubscriptionResource.java</file>
         </group>
     </open-files>
 </project-private>

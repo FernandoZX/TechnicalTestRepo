@@ -53,7 +53,8 @@ public class UserResource {
             
             System.out.println("session Data"+sessionManager);
             sessionManager.getSession().setAttribute("userID", u);
-            GenericJSONResponse response = new GenericJSONResponse(true, GenericJSONResponse.SUCCESFUL_PROCESSED_STATUS, "Inicio de sesiÃ³n con exito");
+            GenericJSONResponse response = new GenericJSONResponse(true, GenericJSONResponse.SUCCESFUL_PROCESSED_STATUS, "Inicio de sesiÃ³n con exito",u);
+            response.exclude("object.password");
             return response.toString();
         } else {
             GenericJSONResponse response = new GenericJSONResponse(true, GenericJSONResponse.INVALID_SESSION_STATUS, "Usuario o contraseña invalido");
@@ -71,7 +72,7 @@ public class UserResource {
         if (res == true) {
             response = new GenericJSONResponse(true, GenericJSONResponse.SUCCESFUL_PROCESSED_STATUS, "sesiÃ³n terminada correctamente").toString();
         } else {
-            response = new GenericJSONResponse(false, GenericJSONResponse.CONFLICT_STATUS, "No existe sesiÃ³n a terminar").toString();
+            response = new GenericJSONResponse(false, GenericJSONResponse.INVALID_SESSION_STATUS, "No existe sesiÃ³n a terminar").toString();
         }
         return response;
     }

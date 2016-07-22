@@ -45,7 +45,7 @@ public class PrizesResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("crear")
-    public String create(@Context HttpServletRequest httpServletRequest, @FormParam("name") String nombre) {
+    public String create(@Context HttpServletRequest httpServletRequest, @FormParam("prizesName") String nombre) {
         String response = "";
         SessionManager sessionManager = new SessionManager(httpServletRequest);
         if (sessionManager.validateSession()) {
@@ -67,7 +67,7 @@ public class PrizesResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("edit")
-    public String edit(@Context HttpServletRequest httpServletRequest, @FormParam("prizeID") Integer prizeID, @FormParam("name") String nombre) {
+    public String edit(@Context HttpServletRequest httpServletRequest, @FormParam("idPrizes") Integer prizeID, @FormParam("prizesName") String nombre) {
         String response = "";
         SessionManager sessionManager = new SessionManager(httpServletRequest);
         if (sessionManager.validateSession()) {
@@ -96,7 +96,7 @@ public class PrizesResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("delete")
-    public String delete(@Context HttpServletRequest httpServletRequest, @FormParam("prizeID") Integer prizeID) {
+    public String delete(@Context HttpServletRequest httpServletRequest, @FormParam("idPrizes") Integer prizeID) {
         String response = "";
         SessionManager sessionManager = new SessionManager(httpServletRequest);
         if (sessionManager.validateSession()) {
@@ -122,7 +122,7 @@ public class PrizesResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("list")
-    public String list(@Context HttpServletRequest httpServletRequest, @FormParam("name") String name, @FormParam("start") int start, @FormParam("limit") int limit) {
+    public String list(@Context HttpServletRequest httpServletRequest, @FormParam("prizesName") String name, @FormParam("start") int start, @FormParam("limit") int limit) {
         String response = "";
         SessionManager sessionManager = new SessionManager(httpServletRequest);
         if (sessionManager.validateSession()) {

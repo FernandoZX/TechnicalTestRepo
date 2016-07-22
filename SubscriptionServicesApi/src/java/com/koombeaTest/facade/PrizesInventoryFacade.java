@@ -66,6 +66,14 @@ public class PrizesInventoryFacade extends AbstractFacade<SubsPrizesinventory> {
         return result;
     }
 
+    public void editStock(SubsPrizesinventory current) {
+        try {
+            getEntityManager().merge(current);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public String deletePrizeInventory(SubsPrizesinventory current) {
         String result = "";
         try {
@@ -137,9 +145,28 @@ public class PrizesInventoryFacade extends AbstractFacade<SubsPrizesinventory> {
         return list.get(0);
     }
 
+    public SubsPrizesinventory findPrizeInventoryByStoreAndPrizes(int idStore, int idPrizes) {
+        Query q = getEntityManager().createQuery("SELECT pi FROM SubsPrizesinventory pi WHERE pi.idStore.id =:storeID and pi.idPrize.id=:prizeID and pi.activo=TRUE");
+        q.setParameter("storeID", idStore);
+        q.setParameter("prizeID", idPrizes);
+        List<SubsPrizesinventory> list = q.getResultList();
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
+    }
+
     public List<SubsPrizesinventory> findPrizeInventoryByStore(int id, int start, int limit) {
         Query q = getEntityManager().createQuery("SELECT pi FROM SubsPrizesinventory pi WHERE pi.idStore.id=:piID and pi.activo=TRUE").setFirstResult(start)
                 .setMaxResults(limit);;
+        q.setParameter("piID", id);
+        List<SubsPrizesinventory> list = q.getResultList();
+
+        return list;
+    }
+
+    public List<SubsPrizesinventory> findPrizeInventoryByStore(int id) {
+        Query q = getEntityManager().createQuery("SELECT pi FROM SubsPrizesinventory pi WHERE pi.idStore.id=:piID and pi.activo=TRUE");
         q.setParameter("piID", id);
         List<SubsPrizesinventory> list = q.getResultList();
 

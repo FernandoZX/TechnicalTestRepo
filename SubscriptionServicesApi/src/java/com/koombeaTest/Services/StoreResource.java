@@ -70,7 +70,7 @@ public class StoreResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("edit")
-    public String edit(@Context HttpServletRequest httpServletRequest, @FormParam("storeID") Integer storeID, @FormParam("nombre") String nombre, @FormParam("descripcion") String descripcion) {
+    public String edit(@Context HttpServletRequest httpServletRequest, @FormParam("idTienda") Integer storeID, @FormParam("nombre") String nombre, @FormParam("descripcion") String descripcion) {
         String response = "";
         SessionManager sessionManager = new SessionManager(httpServletRequest);
         if (sessionManager.validateSession()) {
@@ -102,7 +102,7 @@ public class StoreResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("list")
-    public String list(@Context HttpServletRequest httpServletRequest, @FormParam("name") String name, @FormParam("start") int start, @FormParam("limit") int limit) {
+    public String list(@Context HttpServletRequest httpServletRequest, @FormParam("nombre") String name, @FormParam("start") int start, @FormParam("limit") int limit) {
         String response = "";
         SessionManager sessionManager = new SessionManager(httpServletRequest);
         if (sessionManager.validateSession()) {
